@@ -10,7 +10,7 @@ class Model<
   constructor(
     private key: string,
     private schema: Schema,
-    private indexes: Indexes
+    private indexes: Indexes = [] as unknown as Indexes
   ) {}
 
   create(kv: Deno.Kv, value: T) {
@@ -95,6 +95,6 @@ class Model<
 export function model<
   T extends z.AnyZodObject,
   Indexes extends (keyof z.infer<T>)[]
->(key: string, schema: T, indexes: Indexes) {
+>(key: string, schema: T, indexes?: Indexes) {
   return new Model<T, z.infer<T>, Indexes>(key, schema, indexes);
 }
